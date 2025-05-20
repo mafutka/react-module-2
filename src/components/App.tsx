@@ -1,21 +1,21 @@
-import Product from "./Products";
+import css from "./App.module.css"
 
-export default function App() {
-  return (
-    <>
-      <h1>Best selling</h1>
-      <Product
-        name="Tacos With Lime"
-        imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
-        price={10.99}
-      />
-      <Product
-        name="Fries and Burger"
-        imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
-        price={14.29}
-      />
-
-    </>
-  );
+interface OrderFormProps {
+  onSubmit: (value: string) => void;
 }
+
+export default function OrderForm({ onSubmit }: OrderFormProps) {
+  const handleSubmit = (formData: FormData) => {
+   const username = formData.get("username") as string;
+   onSubmit(username);
+  
+  };
+
+  return <form action={handleSubmit} className="">
+    <input type="text" name="username" defaultValue="John Doe"/>
+    <button className={css.sbmbtn} type="submit">Submit</button>
+  </form>
+}
+
+
 
