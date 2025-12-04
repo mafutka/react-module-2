@@ -1,21 +1,30 @@
-import css from "./App.module.css"
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-interface OrderFormProps {
-  onSubmit: (value: string) => void;
-}
+export default function App() {
+  const [count, setCount] = useState(1);
+  const [person, setPerson] = useState(null);
 
-export default function OrderForm({ onSubmit }: OrderFormProps) {
-  const handleSubmit = (formData: FormData) => {
-   const username = formData.get("username") as string;
-   onSubmit(username);
+  useEffect(() => {
+    console.log('hello');
+    
+    async function fetchData() {
+      await axios
+  .get(`https://swapi.info/api/people/${count}`)
+  .then((response) => setPerson(response.data));
+  }
+  fetchData();
+  }, [count]);
+
   
-  };
 
-  return <form action={handleSubmit} className="">
-    <input type="text" name="username" defaultValue="John Doe"/>
-    <button className={css.sbmbtn} type="submit">Submit</button>
-  </form>
+    console.log('bye-bye');
+  
+
+
+  return <>
+  <h2>The count is {count}</h2>
+    <button onClick ={() => setCount(count + 1)}>Nex person</button>
+    <pre>{JSON.stringify(person, null, 2)}</pre>
+  </>
 }
-
-
-
