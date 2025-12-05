@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import SearchForm from "../SearchForm/SearchForm";
+import Button from "../Button/Button";
 import axios from "axios";
 
 export default function App() {
@@ -16,15 +18,21 @@ export default function App() {
   fetchData();
   }, [count]);
 
-  
+  const handleSearch = (searchTopic: string) => {
+    console.log(`${searchTopic}`);
+    
 
-    console.log('bye-bye');
+  }
   
 
 
   return <>
+
   <h2>The count is {count}</h2>
     <button onClick ={() => setCount(count + 1)}>Nex person</button>
     <pre>{JSON.stringify(person, null, 2)}</pre>
+
+     <SearchForm onSearch = {handleSearch}/>
+      <Button />
   </>
 }
