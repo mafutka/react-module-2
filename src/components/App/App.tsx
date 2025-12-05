@@ -18,8 +18,11 @@ export default function App() {
   fetchData();
   }, [count]);
 
-  const handleSearch = (searchTopic: string) => {
-    console.log(`${searchTopic}`);
+  const handleSearch = async (searchTopic: string) => {
+    const response = await axios.get(`http://hn.algolia.com/api/v1/search?query=${searchTopic}`);
+
+    console.log(response.data);
+    
     
 
   }
