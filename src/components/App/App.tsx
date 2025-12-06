@@ -1,39 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import Button from "../Button/Button";
 import axios from "axios";
+import Sidebar from "../Sidebar/Sidebar";
 
 export default function App() {
-  const [count, setCount] = useState(1);
-  const [person, setPerson] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isSidebsrOpen, setIsSidebarOpen] = useState(false);
 
-  useEffect(() => {
-    console.log('hello');
-    
-    async function fetchData() {
-      await axios
-  .get(`https://swapi.info/api/people/${count}`)
-  .then((response) => setPerson(response.data));
-  }
-  fetchData();
-  }, [count]);
+  const openSidebar = () => setIsSidebarOpen(true);
+  const closeSidebar = () => setIsSidebarOpen(false);
 
   const handleSearch = async (searchTopic: string) => {
     const response = await axios.get(`http://hn.algolia.com/api/v1/search?query=${searchTopic}`);
-
     console.log(response.data);
-    
-    
 
   }
   
 
 
   return <>
+  <button onClick={openSidebar}>Open sidebar</button>
+  {isSidebsrOpen && <Sidebar onClose={closeSidebar}/>}
 
-  <h2>The count is {count}</h2>
-    <button onClick ={() => setCount(count + 1)}>Nex person</button>
-    <pre>{JSON.stringify(person, null, 2)}</pre>
+  <button onClick={() => setIsVisible(!isVisible)}>Toggle</button>
 
      <SearchForm onSearch = {handleSearch}/>
       <Button />
